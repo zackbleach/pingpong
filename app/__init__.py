@@ -11,4 +11,7 @@ from app import models
 manager = APIManager(app, flask_sqlalchemy_db=db)
 manager.create_api(models.Player, methods=['GET', 'POST', 'PUT', 'DELETE'])
 manager.create_api(models.Game, methods=['GET', 'POST', 'PUT', 'DELETE'])
-manager.create_api(models.PlayerGameMap, methods=['GET', 'POST', 'PUT', 'DELETE'])
+
+import logging
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
