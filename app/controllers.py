@@ -20,8 +20,8 @@ def store_game():
     db.session.add(new_game)
     db.session.commit()
 
-    winners = game.get('winner')
-    losers = game.get('loser')
+    winners = game.get('winners')
+    losers = game.get('losers')
 
     store_participants_from_game(winners, losers, new_game)
     update_skill(winners, losers)
