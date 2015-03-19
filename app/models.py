@@ -45,23 +45,23 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     loser_score = db.Column(db.Integer, nullable=False)
-    loser = db.relationship('Player',
-                            secondary=Participant.__table__,
-                            secondaryjoin=and_(
-                                Player.id == Participant.player_id,
-                                Participant.winner == False))
-    winner = db.relationship('Player',
+    losers = db.relationship('Player',
                              secondary=Participant.__table__,
                              secondaryjoin=and_(
                                  Player.id == Participant.player_id,
-                                 Participant.winner == True))
+                                 Participant.winner == False))
+    winners = db.relationship('Player',
+                              secondary=Participant.__table__,
+                              secondaryjoin=and_(
+                                  Player.id == Participant.player_id,
+                                  Participant.winner == True))
 
     def to_json(self):
         return dict(id=self.id,
                     date=self.date,
                     loser_score=self.loser_score,
-                    loser=self.loser[0].to_json(),
-                    winner=self.winner[0].to_json()
+                    loser=[l.to_json() for l in self.loser],
+                    winner=[w.to_json() for w in self.winner]
                     )
 
     def __repr__(self):

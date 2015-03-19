@@ -47,14 +47,14 @@ def update_skill(winners, losers):
                                                  losers_old_ratings], ranks=[0,1])
 
     for winner in winner_new_ratings.keys():
-        winning_player.skill = winner_new_ratings[winner].mu
-        winning_player.skill_sd = winner_new_ratings[winner].sigma
-        db.session.add(winning_player)
+        winner.skill = winner_new_ratings[winner].mu
+        winner.skill_sd = winner_new_ratings[winner].sigma
+        db.session.add(winner)
 
     for loser in loser_new_ratings.keys():
-        losing_player.skill = loser_new_ratings[loser].mu
-        losing_player.skill_sd = loser_new_ratings[loser].sigma
-        db.session.add(losing_player)
+        loser.skill = loser_new_ratings[loser].mu
+        loser.skill_sd = loser_new_ratings[loser].sigma
+        db.session.add(loser)
 
     db.session.commit()
 
