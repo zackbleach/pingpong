@@ -5,7 +5,7 @@ from models import Player
 from models import Game
 from flask import jsonify
 from app import db
-from trueskill import Rating, rate_1vs1, quality_1vs1
+from trueskill import Rating, rate, quality_1vs1
 import json
 from config import api_path
 
@@ -20,44 +20,56 @@ def store_game():
     db.session.add(new_game)
     db.session.commit()
 
-    winner = game.get('winner')[0]
-    loser = game.get('loser')[0]
+    winners = game.get('winner')
+    losers = game.get('loser')
 
-    store_participants_from_game(winner, loser, new_game)
-    update_skill(winner, loser)
+    store_participants_from_game(winners, losers, new_game)
+    update_skill(winners, losers)
     return jsonify(game=new_game.to_json())
 
 
-def update_skill(winner, loser):
-    winning_player = Player.query.filter_by(id=winner.get('id')).first()
-    losing_player = Player.query.filter_by(id=loser.get('id')).first()
+def update_skill(winners, losers):
 
-    winning_previous_rating = Rating(winning_player.skill,
-                                     winning_player.skill_sd)
-    loser_previous_rating = Rating(losing_player.skill,
-                                   winning_player.skill_sd)
+    winners_old_ratings = {}
+    losers_old_ratings = {}
 
-    winning_new_rating, loser_new_rating = rate_1vs1(winning_previous_rating,
-                                                     loser_previous_rating)
-    winning_player.skill = winning_new_rating.mu
-    losing_player.skill = loser_new_rating.mu
+    for winner in winners:
+        winning_player = Player.query.filter_by(id=winner.get('id')).first()
+        winners_old_ratings[winning_player] = Rating(winning_player.skill,
+                                             winning_player.skill_sd)
 
-    winning_player.skill_sd = winning_new_rating.sigma
-    losing_player.skill_sd = loser_new_rating.sigma
+    for loser in losers:
+        losing_player = Player.query.filter_by(id=loser.get('id')).first()
+        losers_old_ratings[losing_player] = Rating(losing_player.skill,
+                                           winning_player.skill_sd)
 
-    db.session.add(winning_player)
-    db.session.add(losing_player)
+    winner_new_ratings, loser_new_ratings = rate([winners_old_ratings,
+                                                 losers_old_ratings], ranks=[0,1])
+
+    for winner in winner_new_ratings.keys():
+        winning_player.skill = winner_new_ratings[winner].mu
+        winning_player.skill_sd = winner_new_ratings[winner].sigma
+        db.session.add(winning_player)
+
+    for loser in loser_new_ratings.keys():
+        losing_player.skill = loser_new_ratings[loser].mu
+        losing_player.skill_sd = loser_new_ratings[loser].sigma
+        db.session.add(losing_player)
+
     db.session.commit()
 
 
-def store_participants_from_game(winner, loser, game):
-    winning_participant = Participant(player_id=winner.get('id'),
-                                      game_id=game.id, winner=True)
-    db.session.add(winning_participant)
+def store_participants_from_game(winners, losers, game):
+    for winner in winners:
+        winning_participant = Participant(player_id=winner.get('id'),
+                                          game_id=game.id, winner=True)
+        db.session.add(winning_participant)
 
-    losing_participant = Participant(player_id=loser.get('id'),
-                                     game_id=game.id, winner=False)
-    db.session.add(losing_participant)
+    for loser in losers:
+        losing_participant = Participant(player_id=loser.get('id'),
+                                         game_id=game.id, winner=False)
+        db.session.add(losing_participant)
+
     db.session.commit()
 
 
