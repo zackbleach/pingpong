@@ -6,12 +6,21 @@ app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
 
-from app import models
+from models import Player
+from models import Game
+from config import api_path
+
+import controllers
+
 
 manager = APIManager(app, flask_sqlalchemy_db=db)
-manager.create_api(models.Player, methods=['GET', 'POST', 'PUT', 'DELETE'])
-manager.create_api(models.Game, methods=['GET', 'POST', 'PUT', 'DELETE'])
 
-import logging
-logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+manager.create_api(Player,
+                   collection_name=Player.collection_name,
+                   methods=['GET', 'POST', 'PUT', 'DELETE'],
+                   url_prefix=api_path)
+
+manager.create_api(Game,
+                   collection_name=Game.collection_name,
+                   methods=['GET', 'POST', 'PUT', 'DELETE'],
+                   url_prefix=api_path)
