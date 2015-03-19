@@ -60,8 +60,8 @@ class Game(db.Model):
         return dict(id=self.id,
                     date=self.date,
                     loser_score=self.loser_score,
-                    loser=[l.to_json() for l in self.loser],
-                    winner=[w.to_json() for w in self.winner]
+                    loser=[l.to_json() for l in self.losers],
+                    winner=[w.to_json() for w in self.winners]
                     )
 
     def __repr__(self):
