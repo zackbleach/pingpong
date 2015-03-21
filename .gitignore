@@ -1,4 +1,4 @@
 *.pyc
 *.db
 tmp/
-db_repository
+db_repository/

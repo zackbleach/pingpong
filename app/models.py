@@ -35,9 +35,8 @@ class Player(db.Model):
                     office=self.office
                     )
 
-
-def __repr__(self):
-        return '<User %r>' % (self.name)
+    def __repr__(self):
+            return '<User %r>' % (self.name)
 
 
 class Game(db.Model):
@@ -60,8 +59,8 @@ class Game(db.Model):
         return dict(id=self.id,
                     date=self.date,
                     loser_score=self.loser_score,
-                    losers=[l.to_json() for l in self.losers],
-                    winners=[w.to_json() for w in self.winners]
+                    losers=[loser.to_json() for loser in self.losers],
+                    winners=[winner.to_json() for winner in self.winners]
                     )
 
     def __repr__(self):

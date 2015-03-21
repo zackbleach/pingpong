@@ -1,18 +1,18 @@
+import json
 from app import app
+from app import db
+from config import API_PATH
+from flask import jsonify
 from flask import request
+from models import Game
 from models import Participant
 from models import Player
-from models import Game
-from flask import jsonify
-from app import db
 from trueskill import Rating, rate, quality_1vs1
-import json
-from config import api_path
 
-game_api_path = api_path+'/'+Game.collection_name
+GAME_API_PATH = API_PATH + '/' + Game.collection_name
 
 
-@app.route(game_api_path, methods=['POST'])
+@app.route(GAME_API_PATH, methods=['POST'])
 def store_game():
     game = json.loads(request.data)
     my_loser_score = game.get('loser_score')
@@ -36,15 +36,16 @@ def update_skill(winners, losers):
     for winner in winners:
         winning_player = Player.query.filter_by(id=winner.get('id')).first()
         winners_old_ratings[winning_player] = Rating(winning_player.skill,
-                                             winning_player.skill_sd)
+                                                     winning_player.skill_sd)
 
     for loser in losers:
         losing_player = Player.query.filter_by(id=loser.get('id')).first()
         losers_old_ratings[losing_player] = Rating(losing_player.skill,
-                                           winning_player.skill_sd)
+                                                   winning_player.skill_sd)
 
     winner_new_ratings, loser_new_ratings = rate([winners_old_ratings,
-                                                 losers_old_ratings], ranks=[0,1])
+                                                 losers_old_ratings],
+                                                 ranks=[0, 1])
 
     for winner in winner_new_ratings.keys():
         winner.skill = winner_new_ratings[winner].mu
@@ -73,7 +74,7 @@ def store_participants_from_game(winners, losers, game):
     db.session.commit()
 
 
-@app.route(api_path+'/'+'draw'+'/<player_one>/<player_two>', methods=['GET'])
+@app.route(API_PATH+'/'+'draw'+'/<player_one>/<player_two>', methods=['GET'])
 def quality(player_one, player_two):
 
     player_one = Player.query.filter_by(id=player_one).first()
