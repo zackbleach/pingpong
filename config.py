@@ -8,4 +8,3 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 API_VERSION = 1
 API_PATH = '/api/' + str(API_VERSION)
 
-DEFAULT_PORT = 5000
