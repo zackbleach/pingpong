@@ -18,6 +18,7 @@ class Player(db.Model):
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     avatar = db.Column(db.String(120), nullable=False)
     skill = db.Column(db.Float, default=25)
+    cd = True
     skill_sd = db.Column(db.Float, default=8.333333333333334)
     office = db.Column(db.Enum('San Francisco',
                                'Brighton',
