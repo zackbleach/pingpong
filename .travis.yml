@@ -13,5 +13,8 @@ install: "sudo pip install -r requirements.txt"
 script: nosetests
 after_success:
    - cat ~/.ssh/id_rsa_t
+   - cat ~/.ssh/id_rsa_travis_base64
+   - echo id_rsa_t00
+   - ls ~/.ssh     
    - '[ "${TRAVIS_BRANCH}" = "master" ] && git push ubuntu@54.245.251.164:/home/git/pingpong.git  HEAD:master'
 
