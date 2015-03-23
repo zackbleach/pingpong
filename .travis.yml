@@ -2,6 +2,8 @@ Language: python
 python:
   - "2.6"
   - "2.7"
+before_script:
+  - echo -e "Host 54.245.251.164\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 # command to install dependencies
 install: "sudo pip install -r requirements.txt"
 # command to run tests
