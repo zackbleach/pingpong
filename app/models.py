@@ -12,7 +12,7 @@ class Participant(db.Model):
 
 
 class Player(db.Model):
-    collection_name = 'players'
+    collection_name = 'player'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True, nullable=False)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
@@ -32,8 +32,7 @@ class Player(db.Model):
                     avatar=self.avatar,
                     skill=self.skill,
                     skill_sd=self.skill_sd,
-                    office=self.office,
-                    cd="hello!"
+                    office=self.office
                     )
 
     def __repr__(self):
