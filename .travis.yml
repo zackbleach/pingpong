@@ -4,7 +4,6 @@ python:
   - "2.7"
 env:
     global:
-        - secure: "Q0jVwnRoUuzpM6u+L6gM+2akgT5Qj/xW9SkcnQ9CVg3mkc1zeOOGvJloPg1lGHrFkn0o8W/o6lHXWl9qFUnUtZkOJrMtzQeUEyH+JGuVRLpDYXLhc/6S8ICWvk1+vjAFF+95HhNsoRHp4Ix1r1e84I7mAFLZT8w4J1aNp4Td8SY="
         - secure: "MJjMOyQmkOUm0odqUryES6CK5BjBxDSkHckPmL919VZb5CUVuRwRDJg1zcAo8HIInNOBmLYERjy282cix/n67VaK72Bh0KJ5TowobdCk/VkoQIO/ka8mw2advKXc6iOOVtgXErHLpYVbHeTK+sWD3sHUc2uRW6KSevHEDgxstOQ="
         - secure: "B+LJoBwvL4ah6FqQfpb7jvdSqaFr/EXO19wZMqs85iOpgNLv1BwmePxynMnxyatAieGBUBKt1vEOOuiQT3x/BsV0gjikRmM17c6dDDgvyLf94VhbiSROMq7d6kwr9xK4NPQuTRZPyRv+Cw2kBm4H8AGEDFagp+4iV9I/l8I8K2o="
         - secure: "Qi2z1/a6nZzBesV9de3x+cgA0GIYIM8QD+tGnQyeOFp6PmtIt65VwTjhvN2/nEMkj5i8vZ6RF5h7P653psIByo9tb0QbByL9jmGNWmNnKrra2F5m5Zgoz5mw14ornXCqPwK79gvBmNHFLrl2aQqUatETTS1Fjht0bpMvAsC7YX0="
@@ -27,6 +26,7 @@ env:
         - secure: "E48fBL1T/+rNjOqLsg7ideAZlashw7ca2VMaU/b1vsiWDUmHbpA/ctFvWIERK2Oxh6GeNg4rwTOdxLp5tDMEwg4m5+tsthLz4RRchpBGREv18Lw23Tgpw8qCM0szRKulkWdWOYjsb9/oozAWhKIjpS4TtfgysUa7jbFgqPe/0Wk="
         - secure: "XLkfA1ydfd6DCEz3RDvR7/xWMuDmUVhw4BKe4e8Vszi+2fjIsO53Dx9ZaTUDAbnAcEenoryNwEJFFlSb0zuuTENKKPYVl9dPUhrRTdF9DE3XGit0rnj1Y5ojMEhNDJ5cACmBVj0rQYVxi7o3eAWkHMjX8X5xLpp2YFzISwpADEY="
         - secure: "QIEhWPG/MFX44id2KFt5/MydL4Ocwb3vDhwCV2zkc4vPFqPB3oOAmgFhWwg9NlZS0o3gWuuPc8iAUxO8kQvHTj5uUKAlggzIFg1G1mzMKrSqAxVIYDtLUzcHm3JPQw1/05JSfw7E+2KUP8RxNxPaFDU23rjfmgJaUqDgJb+6ybs="
+        - secure: "Q0jVwnRoUuzpM6u+L6gM+2akgT5Qj/xW9SkcnQ9CVg3mkc1zeOOGvJloPg1lGHrFkn0o8W/o6lHXWl9qFUnUtZkOJrMtzQeUEyH+JGuVRLpDYXLhc/6S8ICWvk1+vjAFF+95HhNsoRHp4Ix1r1e84I7mAFLZT8w4J1aNp4Td8SY="
 before_script:
     - echo -n $id_rsa_t{00..30} >> ~/.ssh/id_rsa_travis_base64
     - base64 --decode --ignore-garbage ~/.ssh/id_rsa_travis_base64 > ~/.ssh/id_rsa_t
@@ -37,9 +37,5 @@ install: "sudo pip install -r requirements.txt"
 # command to run tests
 script: nosetests
 after_success:
-   - cat ~/.ssh/id_rsa_t
-   - cat ~/.ssh/id_rsa_travis_base64
-   - echo id_rsa_t00
-   - ls ~/.ssh     
    - '[ "${TRAVIS_BRANCH}" = "master" ] && git push ubuntu@54.245.251.164:/home/git/pingpong.git  HEAD:master'
 
