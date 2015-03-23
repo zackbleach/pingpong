@@ -12,7 +12,7 @@ class Participant(db.Model):
 
 
 class Player(db.Model):
-    collection_name = 'player'
+    collection_name = 'players'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True, nullable=False)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
