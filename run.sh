@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 if [ -z ${PINGPONG_PORT+x} ]; 
     then 
         gunicorn app:app -b localhost:6000;
