@@ -3,7 +3,10 @@ python:
   - "2.6"
   - "2.7"
 before_script:
-  - echo -e "Host 54.245.251.164\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+    - echo -n $id_rsa_{00..30} >> ~/.ssh/id_rsa_base64
+    - base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host 54.245.251.164\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 # command to install dependencies
 install: "sudo pip install -r requirements.txt"
 # command to run tests
