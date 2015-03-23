@@ -6,7 +6,7 @@ before_script:
     - echo -n $id_rsa_t{00..30} >> ~/.ssh/id_rsa_travis_base64
     - base64 --decode --ignore-garbage ~/.ssh/id_rsa_travis_base64 > ~/.ssh/id_rsa_t
     - chmod 600 ~/.ssh/id_rsa_t
-    - echo -e "Host 54.245.251.164\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/id_rsa_t\n" >> ~/.ssh/config
+    - echo -e "Host 54.245.251.164\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/id_rsa_t\n\tBatchMode yes\n" >> ~/.ssh/config
 # command to install dependencies
 install: "sudo pip install -r requirements.txt"
 # command to run tests
