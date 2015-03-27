@@ -1,5 +1,0 @@
-Host 54.245.251.164
-	StrictHostKeyChecking no
-	IdentityFile ~/.ssh/id_rsa_t
-	BatchMode yes
-
