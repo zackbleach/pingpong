@@ -1,5 +1,5 @@
 from app import db
-from app.models import Player
+from app.models.player import Player
 
 
 def get_player_by_id(id):
