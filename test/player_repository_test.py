@@ -29,17 +29,17 @@ class TestPlayerRepo():
         db.session.remove()
         db.drop_all()
 
-    # def store_and_retrieve_player_test(self):
-    #     db.session.add(self.create_player())
-    #     db.session.flush()
-    #     player = Player.query.filter_by(id=self.ID).first()
-    #     assert_equals(player.id, self.create_player().id)
+    def store_and_retrieve_player_test(self):
+        db.session.add(self.create_player())
+        db.session.flush()
+        player = Player.query.filter_by(id=self.ID).first()
+        assert_equals(player.id, self.create_player().id)
 
-    # @raises(IntegrityError)
-    # def store_duplicate_player_test(self):
-    #     db.session.add(self.create_player())
-    #     db.session.add(self.create_player())
-    #     db.session.commit()
+    @raises(IntegrityError)
+    def store_duplicate_player_test(self):
+        db.session.add(self.create_player())
+        db.session.add(self.create_player())
+        db.session.commit()
 
     def create_player(self):
         return Player(id=self.ID,
