@@ -33,7 +33,7 @@ class TestPlayerRepo():
         db.session.add(self.create_player())
         db.session.commit()
         player = Player.query.filter_by(id=self.ID).first()
-        assert_equals(player, self.create_player())
+        assert_equals(player.id, self.create_player().id)
 
     @raises(IntegrityError)
     def store_duplicate_player_test(self):
