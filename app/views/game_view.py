@@ -3,9 +3,7 @@ from app import app
 from app import db
 from app.models.game import Game
 from app.repository.participant_repository import store_participants_from_game
-from app.repository.player_repository import get_player_by_id
-from app.services.trueskill_service import (update_players_skill_from_game,
-                                            get_chance_of_draw)
+from app.services.trueskill_service import update_players_skill_from_game
 from config import API_PATH
 from flask import request
 from flask import jsonify
@@ -26,12 +24,3 @@ def store_game():
 
     db.session.commit()
     return jsonify(game=game.to_json())
-
-
-@app.route(API_PATH+'/'+'draw'+'/<player_one_id>/<player_two_id>',
-           methods=['GET'])
-def quality(player_one_id, player_two_id):
-    player_one = get_player_by_id(player_one_id)
-    player_two = get_player_by_id(player_two_id)
-    chance_of_draw = get_chance_of_draw(player_one, player_two)
-    return jsonify(chance_of_draw=chance_of_draw)
