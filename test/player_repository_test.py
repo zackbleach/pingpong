@@ -1,47 +1,49 @@
 import os
-import unittest
 
 from config import basedir
 from app import app, db
 from app.models.player import Player
-from app.repository import player_repository
+from nose.tools import raises, assert_equals
+from sqlalchemy.exc import IntegrityError
 
 
-class PlayerRepoTest(unittest.TestCase):
+class TestPlayerRepo():
 
     ID = 10
-    NAME = "gfhudgZack"
+    FIRST_NAME = "Zack"
+    LAST_NAME = "Bleach"
     EMAIL = "zack@brandwatch.com"
     AVATAR = "gravatar"
     OFFICE = "San Francisco"
 
-    def setUp(self):
+    def setup(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'
                                                  + os.path.join(basedir,
                                                                 'test.db'))
         self.app = app.test_client()
-        print app.config['SQLALCHEMY_DATABASE_URI']
         db.create_all()
-        db.session.add(self.create_player_for_test())
-        db.session.commit()
 
-    def tearDown(self):
+    def teardown(self):
         db.session.remove()
         db.drop_all()
 
-    def test_my_first_test(self):
-        print app.config['SQLALCHEMY_DATABASE_URI']
-        player = player_repository.get_player_by_id(self.ID)
-        assert(player.id == self.ID)
+    def store_and_retrieve_player_test(self):
+        db.session.add(self.create_player())
+        db.session.commit()
+        player = Player.query.filter_by(id=self.ID).first()
+        assert_equals(player, self.create_player())
 
-    def create_player_for_test(self):
+    @raises(IntegrityError)
+    def store_duplicate_player_test(self):
+        db.session.add(self.create_player())
+        db.session.add(self.create_player())
+        db.session.commit()
+
+    def create_player(self):
         return Player(id=self.ID,
                       name=self.NAME,
                       email=self.EMAIL,
                       avatar=self.AVATAR,
                       office=self.OFFICE)
-
-if __name__ == '__main__':
-    unittest.main()
