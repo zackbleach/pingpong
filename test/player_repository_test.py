@@ -3,7 +3,7 @@ import unittest
 
 from config import basedir
 from app import app, db
-from app.models import Player
+from app.models.player import Player
 from app.repository import player_repository
 
 
