@@ -31,7 +31,7 @@ class TestPlayerRepo():
 
     def store_and_retrieve_player_test(self):
         db.session.add(self.create_player())
-        db.session.commit()
+        db.session.flush()
         player = Player.query.filter_by(id=self.ID).first()
         assert_equals(player.id, self.create_player().id)
 
