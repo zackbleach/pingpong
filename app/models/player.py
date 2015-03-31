@@ -23,7 +23,9 @@ class Player(db.Model):
 
     def to_json(self):
         return dict(id=self.id,
-                    name=self.name,
+                    first_name=self.first_name,
+                    last_name=self.last_name,
+                    nick_name=self.nick_name,
                     email=self.email,
                     avatar=self.avatar,
                     skill=self.skill,

@@ -43,7 +43,8 @@ class TestPlayerRepo():
 
     def create_player(self):
         return Player(id=self.ID,
-                      name=self.NAME,
+                      first_name=self.FIRST_NAME,
+                      last_name=self.LAST_NAME,
                       email=self.EMAIL,
                       avatar=self.AVATAR,
                       office=self.OFFICE)
