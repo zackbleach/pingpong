@@ -19,5 +19,5 @@ manager.create_api(Game,
                    url_prefix=API_PATH)
 
 
-from app.views import extended_game_view, extended_player_view
+import app.views
 app.debug = True

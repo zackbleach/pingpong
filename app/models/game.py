@@ -50,4 +50,4 @@ class Game(db.Model):
         return winners, losers
 
         def __repr__(self):
-            return '<Game %r>' % (self.id)
+            return '<Game: id = %r>' % (self.id)

@@ -34,4 +34,6 @@ class Player(db.Model):
         return Rating(self.skill, self.skill_sd)
 
     def __repr__(self):
-            return '<User %r>' % (self.first_name)
+        return '<User: id = %r, name = %r %r>' % (self.id,
+                                                  self.first_name,
+                                                  self.last_name)

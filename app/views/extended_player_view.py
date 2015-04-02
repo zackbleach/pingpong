@@ -1,8 +1,9 @@
 from app import app
 from app.models.player import Player
 from app.repository.player_repository import get_player_by_id
-from app.services.player_service import get_players_above, get_players_below
-from app.services.trueskill_service import get_chance_of_draw
+from app.services.player_service import (get_players_above,
+                                         get_players_below,
+                                         get_chance_of_draw)
 from config import API_PATH
 from flask import jsonify
 

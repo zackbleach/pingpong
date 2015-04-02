@@ -21,5 +21,3 @@ def store_players(players):
     for player in players:
         db.session.add(player)
     db.session.commit()
-
-

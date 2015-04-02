@@ -8,4 +8,6 @@ class Participant(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), primary_key=True)
     winner = db.Column(db.Boolean)
 
-
+    def __repr__(self):
+        return '<Participant: Player = %r, Game = %r>' % (self.player_id,
+                                                          self.game_id)
