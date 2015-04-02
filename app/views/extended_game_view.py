@@ -2,7 +2,7 @@ import json
 from app import app
 from app import db
 from app.models.game import Game
-from app.repository.participant_repository import store_participants_from_game
+from app.services.participant_service import store_participants_from_game
 from app.services.trueskill_service import update_players_skill_from_game
 from config import API_PATH
 from flask import request
