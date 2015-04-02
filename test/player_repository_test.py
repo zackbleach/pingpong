@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 class TestPlayerRepo():
 
-    ID = 10
+    ID = 1
     FIRST_NAME = "Zack"
     LAST_NAME = "Bleach"
     EMAIL = "zack@brandwatch.com"
@@ -31,15 +31,49 @@ class TestPlayerRepo():
 
     def store_and_retrieve_player_test(self):
         db.session.add(self.create_player())
-        db.session.flush()
         player = Player.query.filter_by(id=self.ID).first()
         assert_equals(player.id, self.create_player().id)
 
-    @raises(IntegrityError)
-    def store_duplicate_player_test(self):
-        db.session.add(self.create_player())
-        db.session.add(self.create_player())
-        db.session.commit()
+    # @raises(IntegrityError)
+    # def store_player_with_no_first_name_test(self):
+    #     player = self.create_player()
+    #     player.first_name = None
+    #     db.session.add(player)
+    #     db.session.commit()
+
+    # @raises(IntegrityError)
+    # def store_player_with_no_avatar_test(self):
+    #     player = self.create_player()
+    #     player.avatar = None
+    #     db.session.add(player)
+    #     db.session.commit()
+
+    # @raises(IntegrityError)
+    # def store_player_with_no_office_test(self):
+    #     player = self.create_player()
+    #     player.office = None
+    #     db.session.add(player)
+    #     db.session.commit()
+
+    # @raises(IntegrityError)
+    # def store_player_with_invalid_office_test(self):
+    #     player = self.create_player()
+    #     player.office = "Birmingham"
+    #     db.session.add(player)
+    #     db.session.commit()
+
+    # @raises(IntegrityError)
+    # def store_player_with_no_email_test(self):
+    #     player = self.create_player()
+    #     player.email = ""
+    #     db.session.add(player)
+    #     db.session.commit()
+
+    # @raises(IntegrityError)
+    # def store_duplicate_player_test(self):
+    #     db.session.add(self.create_player())
+    #     db.session.add(self.create_player())
+    #     db.session.commit()
 
     def create_player(self):
         return Player(id=self.ID,

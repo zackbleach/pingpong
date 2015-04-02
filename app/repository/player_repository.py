@@ -1,5 +1,6 @@
 from app import db
 from app.models.player import Player
+from sqlalchemy import and_, desc
 
 
 def get_player_by_id(id):
@@ -20,3 +21,5 @@ def store_players(players):
     for player in players:
         db.session.add(player)
     db.session.commit()
+
+

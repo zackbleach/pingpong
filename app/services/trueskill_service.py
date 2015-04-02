@@ -16,6 +16,6 @@ def update_players_skill_from_game(game):
 
 
 def get_chance_of_draw(player_one, player_two):
-    quality = quality_1vs1(player_one.get_ranking(), player_two.get_ranking())
+    quality = quality_1vs1(player_one.get_rating(), player_two.get_rating())
     chance_of_draw = '{:.1%}'.format(quality)
     return chance_of_draw
