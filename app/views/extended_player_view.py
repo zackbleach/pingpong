@@ -1,10 +1,10 @@
 from app import app
 from app.models.player import Player
 from app.repository.game_repository import get_games_for_player
-from app.repository.player_repository import get_player_by_id
-from app.services.player_service import (get_players_above,
-                                         get_players_below,
-                                         get_chance_of_draw)
+from app.repository.player_repository import (get_player_by_id,
+                                              get_players_with_skill_above,
+                                              get_players_with_skill_below)
+from app.services.player_service import (get_chance_of_draw)
 from config import API_PATH
 from flask import jsonify
 
@@ -34,6 +34,6 @@ def draw(player_one_id, player_two_id):
 @app.route(PLAYER_API_PATH + '/closest/<player_id>/<no_players>',
            methods=['GET'])
 def closest_skill(player_id, no_players):
-    above = get_players_above(player_id, no_players)
-    below = get_players_below(player_id, no_players)
+    above = get_players_with_skill_above(player_id, no_players)
+    below = get_players_with_skill_below(player_id, no_players)
     return jsonify(above=above, below=below)

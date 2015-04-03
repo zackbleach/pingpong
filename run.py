@@ -21,3 +21,7 @@ manager.create_api(Game,
 
 from app.views import extended_game_view, extended_player_view 
 app.debug = True
+
+import logging
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
