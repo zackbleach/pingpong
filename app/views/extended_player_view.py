@@ -1,5 +1,6 @@
 from app import app
 from app.models.player import Player
+from app.repository.game_repository import get_games_for_player
 from app.repository.player_repository import get_player_by_id
 from app.services.player_service import (get_players_above,
                                          get_players_below,
@@ -9,6 +10,14 @@ from flask import jsonify
 
 
 PLAYER_API_PATH = API_PATH + '/' + Player.collection_name
+
+
+@app.route(PLAYER_API_PATH + '/<player_id>/games',
+           methods=['GET'])
+def games(player_id):
+    games = get_games_for_player(player_id)
+    games_json = [game.to_json() for game in games]
+    return jsonify(games=games_json)
 
 
 @app.route(PLAYER_API_PATH + '/chances/<player_one_id>/<player_two_id>',
