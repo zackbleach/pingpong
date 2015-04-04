@@ -1,4 +1,4 @@
-from app.repository.player_repository import store_player
+from app.repository.player_repository import store_player, get_player_by_id
 from trueskill import rate, quality_1vs1
 
 
@@ -19,3 +19,8 @@ def update_players_skill_from_game(game):
             player.skill = group[player].mu
             player.skill_sd = group[player].sigma
         store_player(player)
+
+
+def player_exists(id):
+    player = get_player_by_id(id)
+    return player is not None

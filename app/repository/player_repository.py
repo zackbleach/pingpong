@@ -4,7 +4,8 @@ from sqlalchemy import and_, desc
 
 
 def get_player_by_id(id):
-    return Player.query.filter_by(id=id).first()
+    player = Player.query.filter_by(id=id).first()
+    return player
 
 
 def get_players():
