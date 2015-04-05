@@ -1,3 +1,5 @@
+import json
+from flask import request
 from app.repository.player_repository import store_player, get_player_by_id
 from trueskill import rate, quality_1vs1
 
@@ -24,3 +26,22 @@ def update_players_skill_from_game(game):
 def player_exists(id):
     player = get_player_by_id(id)
     return player is not None
+
+
+def pre_process_for_post(data=None, **kw):
+    fields = data.keys()
+    if 'id' in fields:
+        data['id'] = None
+    if 'skill' in fields:
+        data['skill'] = None
+    if 'skill_sd' in fields:
+        data['skill_sd'] = None
+
+
+def pre_process_for_put(instance_id=None, data=None, **kw):
+    fields = data.keys()
+    old_player = get_player_by_id(instance_id)
+    if 'skill' in fields:
+        data['skill'] = old_player.skill
+    if 'skill_sd' in fields:
+        data['skill_sd'] = old_player.skill_sd

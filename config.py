@@ -7,6 +7,3 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 API_VERSION = 2
 API_PATH = '/api/' + str(API_VERSION)
-
-VALID_OFFICES = ('Brighton', 'New York', 'Berlin', 'San Francisco',
-                 'Stuttgart', 'London')

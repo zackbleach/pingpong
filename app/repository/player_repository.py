@@ -5,23 +5,23 @@ from sqlalchemy import and_, desc
 
 def get_player_by_id(id):
     player = Player.query.filter_by(id=id).first()
+    if player is None:
+        raise ValueError('Player with ID: %d not found' % id)
     return player
 
 
 def get_players():
     players = Player.query.all()
-    return [player.to_json() for player in players]
+    return players
 
 
 def store_player(player):
     db.session.add(player)
-    db.session.commit()
 
 
 def store_players(players):
     for player in players:
         db.session.add(player)
-    db.session.commit()
 
 
 def get_players_with_skill_above(player_id, number_of_players):

@@ -3,20 +3,29 @@ from app import db
 from validate_email import validate_email
 from sqlalchemy.orm import validates
 from trueskill import Rating
-from config import VALID_OFFICES
 
 
 class Player(db.Model):
+
     collection_name = 'players'
     id = db.Column(db.Integer, primary_key=True, index=True)
-    first_name = db.Column(db.String(64), nullable=False)
-    last_name = db.Column(db.String(64), nullable=False)
-    nick_name = db.Column(db.String(64))
-    email = db.Column(db.String(120), index=True, unique=True, nullable=False)
+    first_name = db.Column(db.String(32), nullable=False)
+    last_name = db.Column(db.String(32), nullable=False)
+    nick_name = db.Column(db.String(32))
+    email = db.Column(db.String(120),
+                      primary_key=True,
+                      index=True,
+                      unique=True,
+                      nullable=False)
     avatar = db.Column(db.String(120), nullable=False)
     skill = db.Column(db.Float, default=25)
     skill_sd = db.Column(db.Float, default=8.333333333333334)
-    office = db.Column(db.Enum(VALID_OFFICES), nullable=False)
+    office = db.Column(db.Enum('Brighton',
+                               'New York',
+                               'Berlin',
+                               'San Francisco',
+                               'Stuttgart',
+                               'London'), nullable=False)
 
     def to_json(self):
         return dict(id=self.id,
@@ -71,7 +80,12 @@ class Player(db.Model):
 
     @validates('office')
     def valid_offices(self, key, office):
-        if office is None or not in VALID_OFFICES:
+        valid_offices = ('Brighton',
+                         'New York',
+                         'Berlin',
+                         'San Francisco',
+                         'Stuttgart',
+                         'London')
+        if office is None or office not in valid_offices:
             raise ValueError('Office: %s is not recognised.' % office)
         return office
-

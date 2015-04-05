@@ -4,6 +4,7 @@ from app.repository.game_repository import get_games_for_player
 from app.repository.player_repository import (get_player_by_id,
                                               get_players_with_skill_above,
                                               get_players_with_skill_below)
+from app.repository.skill_history_repository import get_history_for_player
 from app.services.player_service import (get_chance_of_draw)
 from config import API_PATH
 from flask import jsonify
@@ -18,6 +19,14 @@ def games(player_id):
     games = get_games_for_player(player_id)
     games_json = [game.to_json() for game in games]
     return jsonify(games=games_json)
+
+
+@app.route(PLAYER_API_PATH + '/<player_id>/skill',
+           methods=['GET'])
+def skill_history(player_id):
+    skill_history = get_history_for_player(player_id)
+    history = [skill.to_json() for skill in skill_history]
+    return jsonify(skill_history=history)
 
 
 @app.route(PLAYER_API_PATH + '/chances/<player_one_id>/<player_two_id>',

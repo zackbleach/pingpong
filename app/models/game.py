@@ -4,6 +4,7 @@ from app.models.participant import Participant
 from app.repository.player_repository import get_player_by_id
 from app.services.player_service import player_exists
 from datetime import datetime
+from dateutil import parser
 from sqlalchemy.orm import validates
 from sqlalchemy.sql import and_
 
@@ -34,20 +35,39 @@ class Game(db.Model):
                     winners=[winner.to_json() for winner in self.winners]
                     )
 
+    def get_players(self):
+        return self.winners + self.losers
+
     @staticmethod
     def from_json(json):
         winners, losers = Game.get_players_from_json(json)
         loser_score = json.get('loser_score')
+        date = parser.parse(json.get('date'))
         return Game(loser_score=loser_score,
                     winners=winners,
-                    losers=losers)
+                    losers=losers,
+                    date=date)
 
     @staticmethod
     def get_players_from_json(game):
+        if 'winners' not in game.keys() or 'losers' not in game.keys():
+            raise ValueError("Game must have players")
+
+        for winner in game['winners']:
+            if 'id' not in winner.keys() or winner['id'] is None:
+                raise ValueError("Must supply valid IDs for winners")
+
+        for loser in game['losers']:
+            if 'id' not in loser.keys() or loser['id'] is None:
+                raise ValueError("Must supply valid IDs for losers")
+
         winners = [get_player_by_id(winner['id'])
                    for winner in game.get('winners')]
         losers = [get_player_by_id(loser['id'])
                   for loser in game.get('losers')]
+
+        if not winners or not losers:
+            raise ValueError("Cannot find players")
 
         return winners, losers
 
@@ -67,13 +87,13 @@ class Game(db.Model):
 
     @validates('date')
     def check_date_in_past(self, key, date):
-        now = datetime.now
+        now = datetime.utcnow()
         if date is None or date > now:
             raise ValueError('Date must not be in the future')
         return date
 
+    @validates('loser_score')
     def check_loser_score(self, key, score):
         if score is None:
             raise ValueError('You must submit a value for loser_score')
         return score
-
