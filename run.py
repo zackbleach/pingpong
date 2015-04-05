@@ -2,22 +2,39 @@ from config import API_PATH
 from app import app, db
 from flask.ext.restless import APIManager
 
-manager = APIManager(app, flask_sqlalchemy_db=db)
+api_manager = APIManager(app, flask_sqlalchemy_db=db)
 
 from app.models.game import Game
 from app.models.player import Player
+from app.services import player_service, game_service
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 
-manager.create_api(Player,
-                   collection_name=Player.collection_name,
-                   methods=['GET', 'POST', 'PUT', 'DELETE'],
-                   url_prefix=API_PATH,
-                   max_results_per_page=500)
+api_manager.create_api(Player,
+                       collection_name=Player.collection_name,
+                       methods=['GET', 'POST', 'PUT', 'DELETE'],
+                       url_prefix=API_PATH,
+                       preprocessors={
+                           'PUT_SINGLE': [player_service.pre_process_for_put],
+                           'POST': [player_service.pre_process_for_post]
+                       },
+                       max_results_per_page=500)
 
-manager.create_api(Game,
-                   collection_name=Game.collection_name,
-                   methods=['GET', 'PUT', 'DELETE'],
-                   url_prefix=API_PATH)
+api_manager.create_api(Game,
+                       collection_name=Game.collection_name,
+                       methods=['GET', 'PUT', 'DELETE'],
+                       preprocessors={
+                           'POST': [game_service.pre_process_for_post]
+                       },
+                       url_prefix=API_PATH)
 
+migrate = Migrate(app, db)
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 from app.views import extended_game_view, extended_player_view, errors
+
 app.debug = True
+
+if __name__ == '__main__':
+    manager.run()
