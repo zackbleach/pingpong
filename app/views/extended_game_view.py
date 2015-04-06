@@ -6,11 +6,10 @@ from app.models.game import Game
 from app.services.participant_service import store_participants_from_game
 from app.services.player_service import update_players_skill_from_game
 from app.services.skill_history_service import store_skill_histories_from_game
-from config import API_PATH
 from flask import request
 from flask import jsonify
 
-
+API_PATH = app.config.get('API_PATH')
 GAME_API_PATH = API_PATH + '/' + Game.collection_name
 
 

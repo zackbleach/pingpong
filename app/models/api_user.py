@@ -1,5 +1,4 @@
-from app import db
-from config import PINGPONG_TOKEN_KEY
+from app import app, db
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer,
                           SignatureExpired, BadSignature)
 from passlib.apps import custom_app_context as pwd_context
@@ -18,14 +17,14 @@ class ApiUser(db.Model):
         return pwd_context.verify(password, self.password)
 
     def generate_auth_token(self, expiration=600):
-        s = Serializer(PINGPONG_TOKEN_KEY, expires_in=expiration)
+        s = Serializer(app.config.SECRET_KEY, expires_in=expiration)
         return s.dumps({'id': self.id})
 
     @staticmethod
     def verify_auth_token(token):
         if not token:
             return None
-        s = Serializer(PINGPONG_TOKEN_KEY)
+        s = Serializer(app.config.SECRET_KEY)
         try:
             data = s.loads(token)
         except SignatureExpired:

@@ -6,11 +6,11 @@ from app.repository.player_repository import (get_player_by_id,
                                               get_players_with_skill_below)
 from app.repository.skill_history_repository import get_history_for_player_from_date
 from app.services.player_service import (get_chance_of_draw)
-from config import API_PATH
 from datetime import datetime, timedelta
 from flask import jsonify
 
 
+API_PATH = app.config.get('API_PATH')
 PLAYER_API_PATH = API_PATH + '/' + Player.collection_name
 
 

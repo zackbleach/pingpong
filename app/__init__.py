@@ -1,3 +1,4 @@
+from config import Config
 from flask import Flask
 from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -5,7 +6,7 @@ from flask_httpauth import HTTPBasicAuth
 
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
 
@@ -17,7 +18,6 @@ decorator trick (hack) to work.
 '''
 
 from app.services.authorisation_service import verify_password
-from config import API_PATH
 
 
 @auth.login_required
@@ -48,7 +48,7 @@ from app.services import player_service, game_service
 api_manager.create_api(Player,
                        collection_name=Player.collection_name,
                        methods=['GET', 'POST', 'PUT', 'DELETE'],
-                       url_prefix=API_PATH,
+                       url_prefix=app.config.get('API_PATH'),
                        preprocessors={
                            'PUT_SINGLE': [player_service.pre_process_for_put],
                            'POST': [player_service.pre_process_for_post]
@@ -61,7 +61,7 @@ api_manager.create_api(Game,
                        preprocessors={
                            'POST': [game_service.pre_process_for_post]
                        },
-                       url_prefix=API_PATH)
+                       url_prefix=app.config.get('API_PATH'))
 
 '''
 Add support for Database migrations with alembic
@@ -78,4 +78,4 @@ manager.add_command('db', MigrateCommand)
 '''
 Import all the views so routes will work
 '''
-from app.views import *
+from app.views import errors, extended_game_view, extended_player_view, token_view
