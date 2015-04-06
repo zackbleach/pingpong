@@ -7,9 +7,16 @@ from app.services.authorisation_service import verify_password
 @auth.login_required
 def do_auth(*args, **kwargs):
     pass
+
 api_manager = APIManager(app,
                          flask_sqlalchemy_db=db,
-                         preprocessors=dict(GET_MANY=[do_auth]))
+                         preprocessors=dict(GET_SINGLE=[do_auth],
+                                            GET_MANY=[do_auth],
+                                            PUT_SINGLE=[do_auth],
+                                            PUT_MANY=[do_auth],
+                                            POST=[do_auth],
+                                            DELETE_SINGLE=[do_auth],
+                                            DELETE_MANY=[do_auth]))
 
 from app.models.game import Game
 from app.models.player import Player
@@ -40,7 +47,7 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
-from app.views import extended_game_view, extended_player_view, errors
+from app.views import extended_game_view, extended_player_view, errors, token_view
 from app.models import api_user
 
 app.debug = True

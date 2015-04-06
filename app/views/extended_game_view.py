@@ -19,7 +19,7 @@ GAME_API_PATH = API_PATH + '/' + Game.collection_name
 def store_game():
     game_json = json.loads(request.data)
     game = Game.from_json(game_json)
-    print game.date
+
     db.session.add(game)
     db.session.flush()  # get games ID
 

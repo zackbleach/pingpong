@@ -7,6 +7,12 @@ def get_history_for_player(id):
     return history
 
 
+def get_history_for_player_from_date(id, date):
+    history = SkillHistory.query.filter(SkillHistory.player_id == id,
+                                        SkillHistory.date >= date).all()
+    return history
+
+
 def store_skill_history(skill_history):
     db.session.add(skill_history)
 

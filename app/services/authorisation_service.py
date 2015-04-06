@@ -1,15 +1,23 @@
 from app import auth
+from app.models.api_user import ApiUser
 from app.repository.api_user_repository import get_api_user_by_username
-from flask import abort
+from flask import abort, g, request
 
 
 @auth.verify_password
 def verify_password(username, password):
-    try:
-        api_user = get_api_user_by_username(username)
-    except ValueError:
-        return False
-    return api_user.verify_password(password)
+    token = request.args.get('token')
+    if not token:
+        try:
+            api_user = get_api_user_by_username(username)
+            if not api_user.verify_password(password):
+                return False
+        except ValueError:
+            return False
+    else:
+        api_user = ApiUser.verify_auth_token(token)
+    g.api_user = api_user
+    return True
 
 
 @auth.error_handler

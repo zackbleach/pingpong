@@ -4,9 +4,10 @@ from app.repository.game_repository import get_games_for_player
 from app.repository.player_repository import (get_player_by_id,
                                               get_players_with_skill_above,
                                               get_players_with_skill_below)
-from app.repository.skill_history_repository import get_history_for_player
+from app.repository.skill_history_repository import get_history_for_player_from_date
 from app.services.player_service import (get_chance_of_draw)
 from config import API_PATH
+from datetime import datetime, timedelta
 from flask import jsonify
 
 
@@ -22,11 +23,15 @@ def games(player_id):
     return jsonify(games=games_json)
 
 
-@app.route(PLAYER_API_PATH + '/<player_id>/skill',
+@app.route(PLAYER_API_PATH + '/<player_id>/skill/<int:days>',
+           methods=['GET'])
+@app.route(PLAYER_API_PATH + '/<player_id>/skill/',
+           defaults={'days': 30},
            methods=['GET'])
 @auth.login_required
-def skill_history(player_id):
-    skill_history = get_history_for_player(player_id)
+def skill_history_from_days(player_id, days):
+    from_date = datetime.utcnow() - timedelta(days=days)
+    skill_history = get_history_for_player_from_date(player_id, from_date)
     history = [skill.to_json() for skill in skill_history]
     return jsonify(skill_history=history)
 
