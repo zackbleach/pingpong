@@ -10,7 +10,7 @@ class TestParticipantService():
     PLAYER_FIRST_NAME = "Zack"
     PLAYER_LAST_NAME = "Bleach"
     PLAYER_EMAIL = "zack@brandwatch.com"
-    PLAYER_AVATAR = "gravatar"
+    PLAYER_AVATAR = "http://zackblea.ch"
     PLAYER_OFFICE = "San Francisco"
 
     GAME_ID = 1
@@ -24,9 +24,6 @@ class TestParticipantService():
 
     def mock_me(self):
         return 2
-    def test_test(self):
-        mock_me = Mock(return_value=3)
-        assert_equals(2, mock_me())
 
     def create_player(self):
         return Player(id=self.PLAYER_ID,

@@ -13,7 +13,7 @@ class TestPlayerRepo():
     FIRST_NAME = "Zack"
     LAST_NAME = "Bleach"
     EMAIL = "zack@brandwatch.com"
-    AVATAR = "gravatar"
+    AVATAR = "http://zackblea.ch"
     OFFICE = "San Francisco"
 
     def setup(self):
