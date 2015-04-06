@@ -1,14 +1,22 @@
 from config import API_PATH
-from app import app, db
+from app import app, db, auth
 from flask.ext.restless import APIManager
+from app.services.authorisation_service import verify_password
 
-api_manager = APIManager(app, flask_sqlalchemy_db=db)
+
+@auth.login_required
+def do_auth(*args, **kwargs):
+    pass
+api_manager = APIManager(app,
+                         flask_sqlalchemy_db=db,
+                         preprocessors=dict(GET_MANY=[do_auth]))
 
 from app.models.game import Game
 from app.models.player import Player
 from app.services import player_service, game_service
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
+
 
 api_manager.create_api(Player,
                        collection_name=Player.collection_name,
@@ -33,6 +41,7 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 from app.views import extended_game_view, extended_player_view, errors
+from app.models import api_user
 
 app.debug = True
 

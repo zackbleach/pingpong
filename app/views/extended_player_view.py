@@ -1,4 +1,4 @@
-from app import app
+from app import app, auth
 from app.models.player import Player
 from app.repository.game_repository import get_games_for_player
 from app.repository.player_repository import (get_player_by_id,
@@ -15,6 +15,7 @@ PLAYER_API_PATH = API_PATH + '/' + Player.collection_name
 
 @app.route(PLAYER_API_PATH + '/<player_id>/games',
            methods=['GET'])
+@auth.login_required
 def games(player_id):
     games = get_games_for_player(player_id)
     games_json = [game.to_json() for game in games]
@@ -23,6 +24,7 @@ def games(player_id):
 
 @app.route(PLAYER_API_PATH + '/<player_id>/skill',
            methods=['GET'])
+@auth.login_required
 def skill_history(player_id):
     skill_history = get_history_for_player(player_id)
     history = [skill.to_json() for skill in skill_history]
@@ -31,6 +33,7 @@ def skill_history(player_id):
 
 @app.route(PLAYER_API_PATH + '/chances/<player_one_id>/<player_two_id>',
            methods=['GET'])
+@auth.login_required
 def draw(player_one_id, player_two_id):
     player_one = get_player_by_id(player_one_id)
     player_two = get_player_by_id(player_two_id)
@@ -42,6 +45,7 @@ def draw(player_one_id, player_two_id):
            defaults={'no_players': 1}, methods=['GET'])
 @app.route(PLAYER_API_PATH + '/closest/<player_id>/<no_players>',
            methods=['GET'])
+@auth.login_required
 def closest_skill(player_id, no_players):
     above = get_players_with_skill_above(player_id, no_players)
     below = get_players_with_skill_below(player_id, no_players)
