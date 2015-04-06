@@ -13,7 +13,7 @@ class TestPlayerRepo():
     FIRST_NAME = "Zack"
     LAST_NAME = "Bleach"
     EMAIL = "zack@brandwatch.com"
-    AVATAR = "http://zackblea.ch"
+    AVATAR = "gravatar"
     OFFICE = "San Francisco"
 
     def setup(self):
@@ -30,6 +30,7 @@ class TestPlayerRepo():
         db.drop_all()
 
     def store_and_retrieve_player_test(self):
+        print Player.query.all()
         db.session.add(self.create_player())
         player = Player.query.filter_by(id=self.ID).first()
         assert_equals(player.id, self.create_player().id)
