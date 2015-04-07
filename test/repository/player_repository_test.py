@@ -1,7 +1,6 @@
 import os
-
-from config import basedir
 from app import app, db
+from config import basedir
 from app.models.player import Player
 from nose.tools import raises, assert_equals
 from sqlalchemy.exc import IntegrityError
@@ -13,25 +12,22 @@ class TestPlayerRepo():
     FIRST_NAME = "Zack"
     LAST_NAME = "Bleach"
     EMAIL = "zack@brandwatch.com"
-    AVATAR = "gravatar"
+    AVATAR = "http://www.hello.com"
     OFFICE = "San Francisco"
 
     def setup(self):
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+            os.path.join(basedir, 'test.db')
         app.config['TESTING'] = True
-        app.config['WTF_CSRF_ENABLED'] = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'
-                                                 + os.path.join(basedir,
-                                                                'test.db'))
-        self.app = app.test_client()
         db.create_all()
 
     def teardown(self):
-        db.session.remove()
-        db.drop_all()
+        pass
 
     def store_and_retrieve_player_test(self):
         print Player.query.all()
         db.session.add(self.create_player())
+        db.session.commit()
         player = Player.query.filter_by(id=self.ID).first()
         assert_equals(player.id, self.create_player().id)
 

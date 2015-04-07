@@ -31,5 +31,5 @@ class Dev(Config):
 
 class Testing(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test.db')
     SQLALCHEMY_ECHO = False

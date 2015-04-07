@@ -1,4 +1,4 @@
-from app import app, manager
+from app import app, manager, restless
 
 app.debug = True
 
