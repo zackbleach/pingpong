@@ -17,6 +17,7 @@ alembic==0.7.5.post2
 aniso8601==0.92
 argh==0.26.1
 decorator==3.4.0
+flask-restplus==0.7.1
 gunicorn==19.3.0
 itsdangerous==0.24
 mimerender==0.5.5
