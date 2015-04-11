@@ -52,3 +52,6 @@ api_manager.create_api(Game,
                            'POST': [game_service.pre_process_for_post]
                        },
                        url_prefix=app.config.get('API_PATH'))
+
+
+from app.views import errors, extended_game_view, extended_player_view, token_view

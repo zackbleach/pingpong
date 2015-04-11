@@ -8,12 +8,12 @@ from trueskill import Rating
 class Player(db.Model):
 
     collection_name = 'players'
-    id = db.Column(db.Integer, primary_key=True, index=True)
+    id = db.Column(db.Integer, primary_key=True, index=True,
+                   autoincrement=True)
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
     nick_name = db.Column(db.String(32))
     email = db.Column(db.String(120),
-                      primary_key=True,
                       index=True,
                       unique=True,
                       nullable=False)

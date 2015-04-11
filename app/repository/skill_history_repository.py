@@ -2,14 +2,20 @@ from app import db
 from app.models.skill_history import SkillHistory
 
 
-def get_history_for_player(id):
-    history = SkillHistory.query.filter(SkillHistory.player_id == id).all()
+def get_history_for_player(id, pagination):
+    history = (SkillHistory.query.filter(SkillHistory.player_id == id)
+                                 .paginate(pagination.page,
+                                           pagination.page_size,
+                                           False))
     return history
 
 
-def get_history_for_player_from_date(id, date):
-    history = SkillHistory.query.filter(SkillHistory.player_id == id,
-                                        SkillHistory.date >= date).all()
+def get_history_for_player_from_date(id, date, pagination):
+    history = (SkillHistory.query.filter(SkillHistory.player_id == id,
+                                         SkillHistory.date >= date)
+                                 .paginate(pagination.page,
+                                           pagination.page_size,
+                                           False))
     return history
 
 

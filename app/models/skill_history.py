@@ -14,7 +14,8 @@ class SkillHistory(db.Model):
     def __repr__(self):
         return ('<Skill History: Player = %r, \
                 Skill = %r, Date = %r>' % (self.player_id,
-                                           self.skill))
+                                           self.skill,
+                                           self.date))
 
     def to_json(self):
         return dict(player_id=self.player_id,

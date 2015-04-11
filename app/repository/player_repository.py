@@ -1,6 +1,6 @@
 from app import db
 from app.models.player import Player
-from sqlalchemy import and_, desc
+from sqlalchemy import and_, desc, update
 
 
 def get_player_by_id(id):
@@ -10,8 +10,17 @@ def get_player_by_id(id):
     return player
 
 
-def get_players():
-    players = Player.query.all()
+def get_player_by_email(email):
+    player = Player.query.filter_by(email=email).first()
+    if player is None:
+        raise ValueError('Player with Email: %s not found' % email)
+    return player
+
+
+def get_players(pagination):
+    players = Player.query.paginate(pagination.page,
+                                    pagination.page_size,
+                                    False)
     return players
 
 
@@ -58,3 +67,13 @@ def get_players_with_skill_below(player_id, number_of_players):
         belows = [below.to_json() for below in belows]
 
     return belows
+
+
+def update_player(player):
+    (db.session.query(Player).filter(Player.id == player.id)
+                             .update({'first_name': player.first_name,
+                                      'last_name': player.last_name}))
+
+
+def delete_player(player_id):
+    (db.session.query(Player).filter(Player.id == player_id).delete())

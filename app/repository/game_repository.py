@@ -14,7 +14,19 @@ def get_games_for_player(player_id):
 
 
 def get_game_by_id(id):
-    game = db.session.query(Game).filter(id=id).first()
+    game = db.session.query(Game).filter(Game.id == id).first()
     if game is None:
         raise ValueError('Game with ID: %d not found' % id)
     return game
+
+
+def get_games(pagination):
+    games = Game.query.paginate(pagination.page,
+                                pagination.page_size,
+                                False)
+    return games
+
+
+def store_game_and_get_id(game):
+    db.session.add(game)
+    db.session.flush()
