@@ -130,7 +130,7 @@ class SkillClosestParser():
         parser.add_argument('number_of_players',
                             type=int,
                             location='args',
-                            required=True)
+                            default=1)
         self.parser = parser
 
     def parse(self):

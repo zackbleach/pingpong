@@ -47,9 +47,7 @@ class SkillDraw(PingPongResource):
         chance_of_draw = get_chance_of_draw(player_one_id,
                                             player_two_id)
 
-        return dict(player_one_id=player_one_id,
-                    player_two_id=player_two_id,
-                    chance_of_draw=chance_of_draw)
+        return dict(chance_of_draw=chance_of_draw)
 
 
 @namespace.route("/closest/<int:player_id>")

@@ -60,8 +60,6 @@ skill_history_paginated = api.extend('Skill history paginated',
 
 
 chance_of_draw = api.model('Chance of Draw', {
-    'player_one_id': fields.Integer(required=True, description='Player ID'),
-    'player_two_id': fields.Integer(required=True, description='Player ID'),
     'chance_of_draw': fields.Float(required=True,
                                    description='Chance of Players drawing \
                                    (between 0 and 1)')

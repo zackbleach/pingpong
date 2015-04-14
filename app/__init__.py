@@ -10,6 +10,7 @@ db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
 api = Api(app, version='3.0', title='Pingpong Rankings')
 
+
 '''
 Add support for Database migrations with alembic
 '''
