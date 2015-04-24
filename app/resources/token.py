@@ -1,5 +1,5 @@
 from app import api, auth
-from app.resources.pingpong_resource import PingPongResource
+from app.resources.pingpong_resource import PaginatedResource
 from app.helpers.swagger_models import token
 from flask import g
 
@@ -7,7 +7,7 @@ namespace = api.namespace("token")
 
 
 @namespace.route('/')
-class Token(PingPongResource):
+class Token(PaginatedResource):
 
     @auth.login_required
     @api.marshal_with(token)

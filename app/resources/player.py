@@ -5,24 +5,43 @@ from app.repository.player_repository import (get_players,
                                               get_player_by_id,
                                               store_player,
                                               update_player,
-                                              delete_player)
-from app.resources.pingpong_resource import PingPongResource
+                                              delete_player,
+                                              get_players_from_office)
+from app.resources.pingpong_resource import PaginatedResource
 from app.helpers.parsers import PlayerParser
 from app.helpers.swagger_models import player, player_paginated
+from config import Config
+from flask_restful import abort
 
 namespace = api.namespace("players")
 
 
 @namespace.route("/", endpoint='Players')
 @api.doc(responses={401: 'Not Authorised'})
-class PlayerList(PingPongResource):
+class PlayerList(PaginatedResource):
 
     @api.marshal_with(player_paginated)
     @auth.login_required
+    @api.doc(params={'office': 'Office players are in'})
     def get(self):
         pagination = self.get_pagination()
-        players = get_players(pagination)
+        office = self.get_office()
+        players = None
+        if (office is not None):
+            players = get_players_from_office(office, pagination)
+        else:
+            players = get_players(pagination)
         return self.paginated_result_to_json(players)
+
+    def get_office(self):
+        office_arg = 'office'
+        parser = api.parser()
+        parser.add_argument(office_arg, type=str, location="args")
+        args = parser.parse_args()
+        office = args.get(office_arg)
+        if (office is not None and office not in Config.OFFICES):
+            abort(400, message="Office not found")
+        return office
 
     @api.marshal_with(player)
     @api.expect(player)
@@ -44,7 +63,7 @@ class PlayerList(PingPongResource):
 
 @namespace.route("/" + '<int:id>')
 @api.doc(responses={401: 'Not Authorised'}, params={'id': 'ID of the player'})
-class PlayerSingle(PingPongResource):
+class PlayerSingle(PaginatedResource):
 
     @api.marshal_with(player)
     @auth.login_required

@@ -1,6 +1,6 @@
 from app import db
 from app.models.player import Player
-from sqlalchemy import and_, desc, update
+from sqlalchemy import and_, desc
 
 
 def get_player_by_id(id):
@@ -8,6 +8,14 @@ def get_player_by_id(id):
     if player is None:
         raise ValueError('Player with ID: %d not found' % id)
     return player
+
+
+def get_players_from_office(office, pagination):
+    players = (Player.query.filter_by(office=office)
+                           .paginate(pagination.page,
+                                     pagination.page_size,
+                                     False))
+    return players
 
 
 def get_player_by_email(email):

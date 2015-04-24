@@ -4,7 +4,7 @@ from flask_restful import abort
 from flask.ext.restplus import Resource
 
 
-class PingPongResource(Resource):
+class SortedResource(Resource):
 
     @app.errorhandler(ValueError)
     def handle_value(error):

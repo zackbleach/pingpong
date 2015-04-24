@@ -2,6 +2,7 @@ from app import api, Config
 from app.models.game import Game
 from app.models.player import Player
 from app.repository.player_repository import get_player_by_id
+from datetime import datetime
 from flask_restful import inputs
 
 
@@ -52,10 +53,6 @@ class GameParser():
                             type=int,
                             required=False,
                             location='json')
-        parser.add_argument('date',
-                            type=inputs.datetime_from_iso8601,
-                            required=False,
-                            location='json')
         parser.add_argument('loser_score',
                             type=int,
                             required=True,
@@ -85,7 +82,7 @@ class GameParser():
         winners = self.get_players(body.winners)
         losers = self.get_players(body.losers)
         return Game(id=body.id,
-                    date=body.date,
+                    date=datetime.utcnow(),
                     loser_score=body.loser_score,
                     winners=winners,
                     losers=losers)

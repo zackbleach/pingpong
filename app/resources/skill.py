@@ -7,7 +7,7 @@ from app.services.player_service import get_chance_of_draw
 from app.repository.player_repository import (get_players_with_skill_above,
                                               get_players_with_skill_below)
 from app.repository.skill_history_repository import get_history_for_player_from_date
-from app.resources.pingpong_resource import PingPongResource
+from app.resources.pingpong_resource import PaginatedResource
 from datetime import datetime, timedelta
 
 
@@ -15,7 +15,7 @@ namespace = api.namespace("skill")
 
 
 @namespace.route("/history/<int:player_id>")
-class SkillHistory(PingPongResource):
+class SkillHistory(PaginatedResource):
 
     @auth.login_required
     @api.doc(params={'player_id': 'Player ID to get Skill History for',
@@ -34,7 +34,7 @@ class SkillHistory(PingPongResource):
 
 
 @namespace.route("/draw/")
-class SkillDraw(PingPongResource):
+class SkillDraw(PaginatedResource):
 
     @auth.login_required
     @api.doc(params={'player_one_id': 'Player One',
@@ -51,7 +51,7 @@ class SkillDraw(PingPongResource):
 
 
 @namespace.route("/closest/<int:player_id>")
-class SkillClosest(PingPongResource):
+class SkillClosest(PaginatedResource):
 
     @auth.login_required
     @api.doc(params={'number_of_players': 'Number of Players'},
