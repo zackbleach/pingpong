@@ -7,7 +7,7 @@ from app.repository.player_repository import (get_players,
                                               update_player,
                                               delete_player,
                                               get_players_from_office)
-from app.resources.paginated_resource import PaginatedResource
+from app.resources.paginated_resource import (PaginatedResource, paginated)
 from app.helpers.parsers import PlayerParser
 from app.helpers.swagger_models import player, player_paginated
 from config import Config
@@ -22,15 +22,17 @@ class PlayerList(PaginatedResource):
 
     @api.marshal_with(player_paginated)
     @auth.login_required
+    @paginated
     @api.doc(params={'office': 'Office players are in'})
     def get(self):
         pagination = self.get_pagination()
+        ordering = self.get_ordering()
         office = self.get_office()
         players = None
         if (office is not None):
             players = get_players_from_office(office, pagination)
         else:
-            players = get_players(pagination)
+            players = get_players(pagination, ordering)
         return self.paginated_result_to_json(players)
 
     def get_office(self):

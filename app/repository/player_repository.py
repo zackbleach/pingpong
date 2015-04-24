@@ -1,6 +1,6 @@
 from app import db
 from app.models.player import Player
-from sqlalchemy import and_, desc
+from sqlalchemy import and_, desc, asc
 
 
 def get_player_by_id(id):
@@ -25,10 +25,12 @@ def get_player_by_email(email):
     return player
 
 
-def get_players(pagination):
-    players = Player.query.paginate(pagination.page,
-                                    pagination.page_size,
-                                    False)
+def get_players(pagination, ordering):
+    order_by_column = get_order_by_column(ordering)
+    players = (Player.query.order_by(order_by_column)
+                           .paginate(pagination.page,
+                                     pagination.page_size,
+                                     False))
     return players
 
 
@@ -85,3 +87,15 @@ def update_player(player):
 
 def delete_player(player_id):
     (db.session.query(Player).filter(Player.id == player_id).delete())
+
+
+def get_order_by_column(ordering):
+    if (ordering is None):
+        return Player.id
+    fields = Player.__dict__
+    column = None
+    if (ordering.direction == 'asc'):
+        column = asc(fields.get(ordering.order_by))
+    else:
+        column = desc(fields.get(ordering.order_by))
+    return column
