@@ -29,7 +29,7 @@ Import all the views so routes will work
 
 
 from app.services.authorisation_service import verify_password
-from app.resources.pingpong_resource import PaginatedResource
+from app.resources.paginated_resource import PaginatedResource
 from app.resources.player import PlayerList, PlayerSingle
 from app.resources.game import GameSingle, GameList
 from app.resources.skill import SkillHistory, SkillClosest
