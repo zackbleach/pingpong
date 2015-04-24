@@ -7,7 +7,7 @@ from app.repository.game_repository import (get_games,
                                             get_game_by_id,
                                             get_games_since_days,
                                             get_games_for_player_since_days)
-from app.resources.pingpong_resource import PaginatedResource
+from app.resources.paginated_resource import PaginatedResource
 from app.services.participant_service import store_participants_from_game
 from app.services.player_service import update_players_skill_from_game
 from app.services.skill_history_service import store_skill_histories_from_game

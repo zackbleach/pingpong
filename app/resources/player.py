@@ -7,7 +7,7 @@ from app.repository.player_repository import (get_players,
                                               update_player,
                                               delete_player,
                                               get_players_from_office)
-from app.resources.pingpong_resource import PaginatedResource
+from app.resources.paginated_resource import PaginatedResource
 from app.helpers.parsers import PlayerParser
 from app.helpers.swagger_models import player, player_paginated
 from config import Config

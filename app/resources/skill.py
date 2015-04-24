@@ -7,7 +7,7 @@ from app.services.player_service import get_chance_of_draw
 from app.repository.player_repository import (get_players_with_skill_above,
                                               get_players_with_skill_below)
 from app.repository.skill_history_repository import get_history_for_player_from_date
-from app.resources.pingpong_resource import PaginatedResource
+from app.resources.paginated_resource import PaginatedResource
 from datetime import datetime, timedelta
 
 
