@@ -1,6 +1,6 @@
 from app import api
 from app.pagination.swagger_models import pagination
-from app.players.swagger_model import player
+from app.players.swagger_models import player
 from flask.ext.restplus import fields
 
 
