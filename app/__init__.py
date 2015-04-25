@@ -28,7 +28,7 @@ Import all the views so routes will work
 '''
 
 
-from app.helpers.authorisation_service import verify_password
+from app.authorisation.authorisation_service import verify_password
 from app.players.views import PlayerList, PlayerSingle
 from app.games.views import GameSingle, GameList
 from app.skill.views import SkillHistory, SkillClosest

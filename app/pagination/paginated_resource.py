@@ -1,6 +1,6 @@
 from app import app, api
-from app.helpers.pagination import Pagination
-from app.helpers.ordering import Ordering
+from app.pagination.pagination import Pagination
+from app.pagination.ordering import Ordering
 from flask_restful import abort
 from flask.ext.restplus import Resource
 

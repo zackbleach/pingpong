@@ -1,5 +1,5 @@
 from app import api, auth
-from app.helpers.swagger_models import skill_history_paginated, chance_of_draw, skill_closest
+from app.skill.swagger_models import skill_history_paginated, chance_of_draw, skill_closest
 from app.skill.request_parsers import (SkillHistoryParser,
                                        SkillClosestParser,
                                        SkillDrawParser)
@@ -7,7 +7,7 @@ from app.players.service import get_chance_of_draw
 from app.players.repository import (get_players_with_skill_above,
                                     get_players_with_skill_below)
 from app.skill.repository import get_history_for_player_from_date
-from app.helpers.paginated_resource import PaginatedResource
+from app.pagination.paginated_resource import PaginatedResource
 from datetime import datetime, timedelta
 
 

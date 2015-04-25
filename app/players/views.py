@@ -6,9 +6,9 @@ from app.players.repository import (get_players,
                                     store_player,
                                     update_player,
                                     delete_player)
-from app.helpers.paginated_resource import (PaginatedResource, paginated)
+from app.pagination.paginated_resource import (PaginatedResource, paginated)
 from app.players.request_parser import PlayerParser
-from app.helpers.swagger_models import player, player_paginated
+from app.players.swagger_model import player, player_paginated
 from config import Config
 from flask_restful import abort
 

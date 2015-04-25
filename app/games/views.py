@@ -1,11 +1,11 @@
 from app import api, auth, db
 from app.games.request_parser import GameParser
-from app.helpers.swagger_models import game as game_model
-from app.helpers.swagger_models import game_paginated
+from app.games.swagger_models import game as game_model
+from app.games.swagger_models import game_paginated
 from app.games.repository import (get_games,
                                   store_game_and_get_id,
                                   get_game_by_id)
-from app.helpers.paginated_resource import PaginatedResource, paginated
+from app.pagination.paginated_resource import PaginatedResource, paginated
 from app.participants.service import store_participants_from_game
 from app.players.service import update_players_skill_from_game
 from app.skill.service import store_skill_histories_from_game

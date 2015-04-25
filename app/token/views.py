@@ -1,6 +1,6 @@
 from app import api, auth
-from app.helpers.paginated_resource import PaginatedResource
-from app.helpers.swagger_models import token
+from app.pagination.paginated_resource import PaginatedResource
+from app.token.swagger_models import token
 from flask import g
 
 namespace = api.namespace("token")
