@@ -1,5 +1,5 @@
 from app import db
-from app.models.skill_history import SkillHistory
+from app.skill.model import SkillHistory
 
 
 def get_history_for_player(id, pagination):

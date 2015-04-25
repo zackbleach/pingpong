@@ -1,6 +1,6 @@
-from app.repository.player_repository import (store_player,
-                                              get_player_by_id,
-                                              get_player_by_email)
+from app.players.repository import (store_player,
+                                    get_player_by_id,
+                                    get_player_by_email)
 from trueskill import rate, quality_1vs1
 
 

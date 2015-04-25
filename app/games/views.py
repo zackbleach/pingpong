@@ -5,10 +5,10 @@ from app.helpers.swagger_models import game_paginated
 from app.games.repository import (get_games,
                                   store_game_and_get_id,
                                   get_game_by_id)
-from app.resources.paginated_resource import PaginatedResource, paginated
-from app.services.participant_service import store_participants_from_game
-from app.services.player_service import update_players_skill_from_game
-from app.services.skill_history_service import store_skill_histories_from_game
+from app.helpers.paginated_resource import PaginatedResource, paginated
+from app.participants.service import store_participants_from_game
+from app.players.service import update_players_skill_from_game
+from app.skill.service import store_skill_histories_from_game
 
 namespace = api.namespace("games")
 

@@ -1,7 +1,6 @@
 from app import db
-from app.models.player import Player
+from app.players.model import Player
 from sqlalchemy import and_, desc, asc
-from config import Config
 
 
 def get_player_by_id(id):

@@ -1,5 +1,5 @@
 from app import db
-from app.models.participant import Participant
+from app.participants.model import Participant
 from app.games.model import Game
 from datetime import date, timedelta
 from sqlalchemy import desc, asc

@@ -1,5 +1,5 @@
 from app import api, Config
-from app.models.player import Player
+from app.players.model import Player
 from flask_restful import inputs
 
 

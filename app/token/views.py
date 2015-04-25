@@ -1,5 +1,5 @@
 from app import api, auth
-from app.resources.paginated_resource import PaginatedResource
+from app.helpers.paginated_resource import PaginatedResource
 from app.helpers.swagger_models import token
 from flask import g
 

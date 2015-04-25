@@ -1,5 +1,5 @@
-from app.models.skill_history import SkillHistory
-from app.repository.skill_history_repository import store_skill_history
+from app.skill.model import SkillHistory
+from app.skill.repository import store_skill_history
 from datetime import datetime
 
 

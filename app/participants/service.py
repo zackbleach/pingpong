@@ -1,5 +1,5 @@
-from app.models.participant import Participant
-from app.repository.participant_repository import store_participant
+from app.participants.model import Participant
+from app.participants.repository import store_participant
 
 
 def store_participants_from_game(game):

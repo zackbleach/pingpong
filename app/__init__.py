@@ -28,9 +28,8 @@ Import all the views so routes will work
 '''
 
 
-from app.services.authorisation_service import verify_password
-from app.resources.paginated_resource import PaginatedResource
-from app.resources.player import PlayerList, PlayerSingle
+from app.helpers.authorisation_service import verify_password
+from app.players.views import PlayerList, PlayerSingle
 from app.games.views import GameSingle, GameList
-from app.resources.skill import SkillHistory, SkillClosest
-from app.resources.token import Token
+from app.skill.views import SkillHistory, SkillClosest
+from app.token.views import Token

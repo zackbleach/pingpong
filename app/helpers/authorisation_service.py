@@ -1,6 +1,6 @@
 from app import auth
-from app.models.api_user import ApiUser
-from app.repository.api_user_repository import get_api_user_by_username
+from app.api_user.model import ApiUser
+from app.api_user.repository import get_api_user_by_username
 from flask import abort, g, request
 
 

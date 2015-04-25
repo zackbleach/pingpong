@@ -1,6 +1,6 @@
 from app import api
 from app.games.model import Game
-from app.repository.player_repository import get_player_by_id
+from app.players.repository import get_player_by_id
 from datetime import datetime
 
 

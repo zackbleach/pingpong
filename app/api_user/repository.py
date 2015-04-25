@@ -1,5 +1,5 @@
 from app import db
-from app.models.api_user import ApiUser
+from app.api_user.model import ApiUser
 
 
 def get_api_user_by_username(username):

@@ -1,13 +1,13 @@
 from app import api, db
 from app import auth
-from app.services.player_service import player_exists, player_exists_by_email
-from app.repository.player_repository import (get_players,
-                                              get_player_by_id,
-                                              store_player,
-                                              update_player,
-                                              delete_player)
-from app.resources.paginated_resource import (PaginatedResource, paginated)
-from app.helpers.parsers.player_parser import PlayerParser
+from app.players.service import player_exists, player_exists_by_email
+from app.players.repository import (get_players,
+                                    get_player_by_id,
+                                    store_player,
+                                    update_player,
+                                    delete_player)
+from app.helpers.paginated_resource import (PaginatedResource, paginated)
+from app.players.request_parser import PlayerParser
 from app.helpers.swagger_models import player, player_paginated
 from config import Config
 from flask_restful import abort
