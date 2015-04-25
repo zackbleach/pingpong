@@ -1,5 +1,5 @@
-from app.game.model import Game
-from app.player.model import Player
+from app.games.model import Game
+from app.players.model import Player
 from nose.tools import assert_equals
 from mock import Mock
 
