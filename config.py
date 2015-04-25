@@ -1,5 +1,4 @@
 import os
-import logging
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 project_name = "pingpong"

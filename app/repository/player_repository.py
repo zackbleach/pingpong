@@ -1,6 +1,7 @@
 from app import db
 from app.models.player import Player
 from sqlalchemy import and_, desc, asc
+from config import Config
 
 
 def get_player_by_id(id):
@@ -10,12 +11,27 @@ def get_player_by_id(id):
     return player
 
 
-def get_players_from_office(office, pagination):
-    players = (Player.query.filter_by(office=office)
-                           .paginate(pagination.page,
-                                     pagination.page_size,
-                                     False))
+def get_players(pagination, ordering, **kwargs):
+    order_by_column = get_order_by_column(ordering)
+    query = get_player_filter_query(**kwargs)
+    players = (query.order_by(order_by_column)
+                    .paginate(pagination.page,
+                              pagination.page_size,
+                              False))
     return players
+
+
+def get_player_filter_query(**kwargs):
+    query = Player.query
+    query = get_office_query_if_exists(query, **kwargs)
+    return query
+
+
+def get_office_query_if_exists(query, **kwargs):
+    office = kwargs.get('office', None)
+    if (office is not None):
+        query = query.filter(Player.office == office)
+    return query
 
 
 def get_player_by_email(email):
@@ -23,15 +39,6 @@ def get_player_by_email(email):
     if player is None:
         raise ValueError('Player with Email: %s not found' % email)
     return player
-
-
-def get_players(pagination, ordering):
-    order_by_column = get_order_by_column(ordering)
-    players = (Player.query.order_by(order_by_column)
-                           .paginate(pagination.page,
-                                     pagination.page_size,
-                                     False))
-    return players
 
 
 def store_player(player):
@@ -94,8 +101,8 @@ def get_order_by_column(ordering):
         return Player.id
     fields = Player.__dict__
     column = None
-    if (ordering.direction == 'asc'):
-        column = asc(fields.get(ordering.order_by))
-    else:
+    if (ordering.direction == 'desc'):
         column = desc(fields.get(ordering.order_by))
+    else:
+        column = asc(fields.get(ordering.order_by))
     return column

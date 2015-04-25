@@ -1,11 +1,7 @@
 from app import db
 from app.models.player import Player
 from app.models.participant import Participant
-from app.repository.player_repository import get_player_by_id
-from app.services.player_service import player_exists
-from config import Config
 from datetime import datetime
-from dateutil import parser
 from sqlalchemy.orm import validates
 from sqlalchemy.sql import and_
 

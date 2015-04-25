@@ -1,5 +1,5 @@
 import json
-from app.repository.game_repository import get_game_by_id
+from app.games.repository import get_game_by_id
 from flask import request
 
 

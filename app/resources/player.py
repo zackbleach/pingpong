@@ -5,10 +5,9 @@ from app.repository.player_repository import (get_players,
                                               get_player_by_id,
                                               store_player,
                                               update_player,
-                                              delete_player,
-                                              get_players_from_office)
+                                              delete_player)
 from app.resources.paginated_resource import (PaginatedResource, paginated)
-from app.helpers.parsers import PlayerParser
+from app.helpers.parsers.player_parser import PlayerParser
 from app.helpers.swagger_models import player, player_paginated
 from config import Config
 from flask_restful import abort
@@ -22,17 +21,15 @@ class PlayerList(PaginatedResource):
 
     @api.marshal_with(player_paginated)
     @auth.login_required
-    @paginated
     @api.doc(params={'office': 'Office players are in'})
+    @paginated
     def get(self):
         pagination = self.get_pagination()
         ordering = self.get_ordering()
         office = self.get_office()
-        players = None
-        if (office is not None):
-            players = get_players_from_office(office, pagination)
-        else:
-            players = get_players(pagination, ordering)
+        players = get_players(pagination, ordering,
+                              office=office)
+
         return self.paginated_result_to_json(players)
 
     def get_office(self):
@@ -97,3 +94,44 @@ class PlayerSingle(PaginatedResource):
         if not player_exists(id):
             message = 'Player with ID: %d does not exist'
             raise ValueError(message % id)
+
+
+class PlayerParser():
+
+    def __init__(self):
+        player_parser = api.parser()
+        player_parser.add_argument('first_name',
+                                   type=str,
+                                   required=True,
+                                   location='json')
+        player_parser.add_argument('last_name',
+                                   type=str,
+                                   required=True,
+                                   location='json')
+        player_parser.add_argument('nick_name',
+                                   type=str,
+                                   required=True,
+                                   location='json')
+        player_parser.add_argument('avatar',
+                                   type=inputs.url,
+                                   required=True,
+                                   location='json')
+        player_parser.add_argument('office',
+                                   type=inputs.regex('|'.join(Config.OFFICES)),
+                                   location='json')
+        player_parser.add_argument('email',
+                                   type=str,
+                                   required=True,
+                                   location='json')
+        self.parser = player_parser
+
+    def parse(self):
+        parsed_body = self.parser.parse_args()
+        return Player(first_name=parsed_body.first_name,
+                      last_name=parsed_body.last_name,
+                      nick_name=parsed_body.nick_name,
+                      avatar=parsed_body.avatar,
+                      office=parsed_body.office,
+                      email=parsed_body.email)
+
+

@@ -1,8 +1,8 @@
 from app import api, auth
 from app.helpers.swagger_models import skill_history_paginated, chance_of_draw, skill_closest
-from app.helpers.parsers import (SkillHistoryParser,
-                                 SkillClosestParser,
-                                 SkillDrawParser)
+from app.helpers.parsers.skill_parsers import (SkillHistoryParser,
+                                               SkillClosestParser,
+                                               SkillDrawParser)
 from app.services.player_service import get_chance_of_draw
 from app.repository.player_repository import (get_players_with_skill_above,
                                               get_players_with_skill_below)

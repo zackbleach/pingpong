@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
-api = Api(app, version='3.0', title='Pingpong Rankings')
+api = Api(app, version='1.0', title='Pingpong Rankings')
 
 
 '''
@@ -31,6 +31,6 @@ Import all the views so routes will work
 from app.services.authorisation_service import verify_password
 from app.resources.paginated_resource import PaginatedResource
 from app.resources.player import PlayerList, PlayerSingle
-from app.resources.game import GameSingle, GameList
+from app.games.views import GameSingle, GameList
 from app.resources.skill import SkillHistory, SkillClosest
 from app.resources.token import Token
