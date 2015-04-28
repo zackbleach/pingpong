@@ -7,6 +7,8 @@ from flask.ext.restplus import fields
 game = api.model('Game', {
     'id': fields.Integer(required=False, description='Game ID'),
     'loser_score': fields.Integer(required=False, description='Loser Score'),
+    'submitted_by': fields.Integer(required=True,
+                                   description='User ID of submitter'),
     'date': fields.String(required=True, description='Date'),
     'winners': fields.Nested(player, 'winners'),
     'losers': fields.Nested(player, 'player')

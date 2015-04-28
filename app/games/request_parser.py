@@ -12,6 +12,10 @@ class GameParser():
                             type=int,
                             required=False,
                             location='json')
+        parser.add_argument('submitted_by',
+                            type=int,
+                            required=True,
+                            location='json')
         parser.add_argument('loser_score',
                             type=int,
                             required=True,
@@ -42,6 +46,7 @@ class GameParser():
         losers = self.get_players(body.losers)
         return Game(id=body.id,
                     date=datetime.utcnow,
+                    submitted_by = body.subimtted_by,
                     loser_score=body.loser_score,
                     winners=winners,
                     losers=losers)
