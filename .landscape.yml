@@ -1,6 +1,4 @@
 strictness: veryhigh
 max-line-length: 100
-uses:
-    - flask
 ignore-paths:
     - migrations
