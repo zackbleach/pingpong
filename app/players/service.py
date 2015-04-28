@@ -21,7 +21,7 @@ def update_players_skill_from_game(game):
         for player in group.keys():
             player.skill = group[player].mu
             player.skill_sd = group[player].sigma
-        store_player(player)
+            store_player(player)
 
 
 def player_exists(id):
