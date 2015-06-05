@@ -28,7 +28,7 @@ class Game(db.Model):
     def to_json(self):
         return dict(id=self.id,
                     date=str(self.date),
-                    submitted_by = self.submitted_by,
+                    submitted_by=self.submitted_by,
                     loser_score=self.loser_score,
                     losers=[loser.to_json() for loser in self.losers],
                     winners=[winner.to_json() for winner in self.winners]

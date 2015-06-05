@@ -45,8 +45,8 @@ class GameParser():
         winners = self.get_players(body.winners)
         losers = self.get_players(body.losers)
         return Game(id=body.id,
-                    date=datetime.utcnow,
-                    submitted_by = body.subimtted_by,
+                    date=datetime.utcnow(),
+                    submitted_by=body.submitted_by,
                     loser_score=body.loser_score,
                     winners=winners,
                     losers=losers)
