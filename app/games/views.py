@@ -57,7 +57,7 @@ class GameList(PaginatedResource):
         update_players_skill_from_game(game)
 
         db.session.commit()
-        return game
+        return game, 201
 
     def get_days(self):
         days_arg = 'days_back'
