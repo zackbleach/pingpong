@@ -2,3 +2,4 @@
 *.db
 tmp/
 db_repository/
+migrations/
