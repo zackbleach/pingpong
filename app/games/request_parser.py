@@ -32,6 +32,10 @@ class GameParser():
                             type=list,
                             required=True,
                             location='json')
+        parser.add_argument('office',
+                            type=str,
+                            required=True,
+                            location='json')
         self.parser = parser
 
     def get_players(self, players_from_body):
@@ -54,4 +58,5 @@ class GameParser():
                     winner_score=body.winner_score,
                     loser_score=body.loser_score,
                     winners=winners,
-                    losers=losers)
+                    losers=losers,
+                    office=body.office)

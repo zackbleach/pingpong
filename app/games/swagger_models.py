@@ -10,6 +10,7 @@ game = api.model('Game', {
     'winner_score': fields.Integer(required=False, description='Winner Score'),
     'submitted_by': fields.Integer(required=True,
                                    description='User ID of submitter'),
+    'office': fields.String(required=True, description='Office'),
     'date': fields.String(required=True, description='Date'),
     'winners': fields.Nested(player, 'winners', required=True),
     'losers': fields.Nested(player, 'losers', required=True)

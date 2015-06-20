@@ -26,6 +26,10 @@ class PlayerParser():
         player_parser.add_argument('office',
                                    type=inputs.regex('|'.join(Config.OFFICES)),
                                    location='json')
+        player_parser.add_argument('google_id',
+                                   type=str,
+                                   required=True,
+                                   location='json')
         player_parser.add_argument('email',
                                    type=str,
                                    required=True,
@@ -39,4 +43,5 @@ class PlayerParser():
                       nick_name=parsed_body.nick_name,
                       avatar=parsed_body.avatar,
                       office=parsed_body.office,
+                      google_id=parsed_body.google_id,
                       email=parsed_body.email)

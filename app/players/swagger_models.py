@@ -16,6 +16,7 @@ player = api.model('Player', {
                              description='Skill Standard Deviation'),
     'office': fields.String(required=True, description='Office',
                             enum=[Config.OFFICES]),
+    'google_id': fields.String(required=True, description='Google ID'),
     })
 
 

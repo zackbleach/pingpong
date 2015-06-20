@@ -1,6 +1,7 @@
 from app import db
 from app.players.model import Player
 from app.participants.model import Participant
+from config import Config
 from datetime import datetime
 from sqlalchemy.orm import validates
 from sqlalchemy.schema import CheckConstraint
@@ -15,6 +16,7 @@ class Game(db.Model):
     loser_score = db.Column(db.Integer, nullable=False, default=0)
     winner_score = db.Column(db.Integer, nullable=False, default=0)
     submitted_by = db.Column(db.Integer, db.ForeignKey('player.id'))
+    office = db.Column(db.Enum(*Config.OFFICES), nullable=False)
     losers = db.relationship('Player',
                              secondary=Participant.__table__,
                              secondaryjoin=and_(
