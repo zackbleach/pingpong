@@ -23,7 +23,6 @@ class PlayerExists(PaginatedResource):
 
     @auth.login_required
     @api.doc(params={'google_id': 'Google ID of player'})
-    @paginated
     @api.marshal_with(player)
     def get(self):
         google_id = self.get_google_id()

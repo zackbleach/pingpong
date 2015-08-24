@@ -88,7 +88,9 @@ def get_players_with_skill_below(player_id, number_of_players):
 def update_player(player):
     (db.session.query(Player).filter(Player.id == player.id)
                              .update({'first_name': player.first_name,
-                                      'last_name': player.last_name}))
+                                      'last_name': player.last_name,
+                                      'office': player.office,
+                                      'email': player.email}))
 
 
 def delete_player(player_id):
