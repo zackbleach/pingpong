@@ -19,7 +19,7 @@ class Config(object):
     DEFAULT_PAGE_SIZE = 25
 
     OFFICES = ['Brighton', 'New York', 'San Francisco',
-               'London', 'Berlin', 'Stuttgart']
+               'London', 'Berlin', 'Stuttgart', '']
 
     SQLALCHEMY_ECHO = True
 

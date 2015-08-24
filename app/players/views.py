@@ -73,7 +73,6 @@ class PlayerList(PaginatedResource):
     @auth.login_required
     @api.doc(responses={201: 'Player Created'})
     def post(self):
-        logging.debug('posting player')
         parser = PlayerParser()
         player = parser.parse()
         self.abort_if_player_with_email_exists(player.email)

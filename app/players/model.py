@@ -44,7 +44,7 @@ class Player(db.Model):
                                                   self.first_name,
                                                   self.last_name)
 
-    @validates('email')
+    # @validates('email')
     def check_email(self, key, email):
         valid_email = validate_email(email)
         if not valid_email:
@@ -82,7 +82,8 @@ class Player(db.Model):
                          'Berlin',
                          'San Francisco',
                          'Stuttgart',
-                         'London')
+                         'London',
+                         '')
         if office is None or office not in valid_offices:
             raise ValueError('Office: %s is not recognised.' % office)
         return office

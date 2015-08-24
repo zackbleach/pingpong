@@ -32,7 +32,7 @@ class PlayerParser():
                                    location='json')
         player_parser.add_argument('email',
                                    type=str,
-                                   required=True,
+                                   required=False,
                                    location='json')
         self.parser = player_parser
 
