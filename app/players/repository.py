@@ -10,6 +10,11 @@ def get_player_by_id(id):
     return player
 
 
+def get_player_by_google_id(google_id):
+    player = Player.query.filter_by(google_id=google_id).first()
+    return player
+
+
 def get_players(pagination, ordering, **kwargs):
     order_by_column = get_order_by_column(ordering)
     query = get_player_filter_query(**kwargs)
@@ -22,11 +27,6 @@ def get_players(pagination, ordering, **kwargs):
 
 def get_player_filter_query(**kwargs):
     query = Player.query
-    query = get_office_query_if_exists(query, **kwargs)
-    return query
-
-
-def get_office_query_if_exists(query, **kwargs):
     office = kwargs.get('office', None)
     if (office is not None):
         query = query.filter(Player.office == office)

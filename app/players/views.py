@@ -5,14 +5,42 @@ from app.players.repository import (get_players,
                                     get_player_by_id,
                                     store_player,
                                     update_player,
-                                    delete_player)
+                                    delete_player,
+                                    get_player_by_google_id)
 from app.pagination.paginated_resource import (PaginatedResource, paginated)
 from app.players.request_parser import PlayerParser
 from app.players.swagger_models import player, player_paginated
 from config import Config
 from flask_restful import abort
+import logging
 
 namespace = api.namespace("players")
+
+
+@namespace.route("/exists", endpoint='Player Exists')
+@api.doc(responses={401: 'Not Authorised'})
+class PlayerExists(PaginatedResource):
+
+    @auth.login_required
+    @api.doc(params={'google_id': 'Google ID of player'})
+    @paginated
+    @api.marshal_with(player)
+    def get(self):
+        google_id = self.get_google_id()
+        player = get_player_by_google_id(google_id)
+        if player is None:
+            abort(404, message="Player not found")
+        return player
+
+    def get_google_id(self):
+        google_id_arg = 'google_id'
+        parser = api.parser()
+        parser.add_argument(google_id_arg, type=str, location="args")
+        args = parser.parse_args()
+        google_id = args.get(google_id_arg)
+        if (google_id is None):
+            abort(400, message="You must supply a google id")
+        return google_id
 
 
 @namespace.route("/", endpoint='Players')
@@ -29,7 +57,6 @@ class PlayerList(PaginatedResource):
         office = self.get_office()
         players = get_players(pagination, ordering,
                               office=office)
-
         return self.paginated_result_to_json(players)
 
     def get_office(self):
@@ -47,6 +74,7 @@ class PlayerList(PaginatedResource):
     @auth.login_required
     @api.doc(responses={201: 'Player Created'})
     def post(self):
+        logging.debug('posting player')
         parser = PlayerParser()
         player = parser.parse()
         self.abort_if_player_with_email_exists(player.email)

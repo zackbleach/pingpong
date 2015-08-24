@@ -21,6 +21,8 @@ class Config(object):
     OFFICES = ['Brighton', 'New York', 'San Francisco',
                'London', 'Berlin', 'Stuttgart']
 
+    SQLALCHEMY_ECHO = True
+
 
 class Dev(Config):
     DEBUG = True
