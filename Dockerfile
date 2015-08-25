@@ -19,6 +19,7 @@ ADD run.py run.py
 
 RUN python run.py db init
 RUN python run.py db migrate
+RUN python run.py create_db
 
 ADD app.db app.db
 
