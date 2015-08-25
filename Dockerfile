@@ -19,5 +19,5 @@ ADD run.py run.py
 ADD app.db app.db
 
 # Run
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "run:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "run:run"]
 
