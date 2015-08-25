@@ -12,7 +12,7 @@ from app.players.request_parser import PlayerParser
 from app.players.swagger_models import player, player_paginated
 from config import Config
 from flask_restful import abort
-import logging
+from flask import current_app
 
 namespace = api.namespace("players")
 
@@ -70,19 +70,24 @@ class PlayerList(PaginatedResource):
 
     @api.marshal_with(player)
     @api.expect(player)
-    @auth.login_required
+    # @auth.login_required
     @api.doc(responses={201: 'Player Created'})
     def post(self):
+        current_app.logger.debug('Creating player')
         parser = PlayerParser()
         player = parser.parse()
+        current_app.logger.debug('Parsed player')
         self.abort_if_player_with_email_exists(player.email)
         store_player(player)
+        current_app.logger.debug('Stored player')
         db.session.commit()
         return player
 
     def abort_if_player_with_email_exists(self, email):
+        current_app.logger.debug('checking if player exists')
         if player_exists_by_email(email):
             message = 'Player with email address: %r already exists'
+            current_app.logger.debug('Player exists!')
             raise ValueError(message % email)
 
 

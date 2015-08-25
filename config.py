@@ -5,7 +5,7 @@ project_name = "pingpong"
 
 
 class Config(object):
-    DEBUG = False
+    DEBUG = True
     TESTING = False
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -21,12 +21,12 @@ class Config(object):
     OFFICES = ['Brighton', 'New York', 'San Francisco',
                'London', 'Berlin', 'Stuttgart', '']
 
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
 
 class Dev(Config):
     DEBUG = True
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
 
 class Testing(Config):
