@@ -70,7 +70,7 @@ class PlayerList(PaginatedResource):
 
     @api.marshal_with(player)
     @api.expect(player)
-    # @auth.login_required
+    @auth.login_required
     @api.doc(responses={201: 'Player Created'})
     def post(self):
         current_app.logger.debug('Creating player')
