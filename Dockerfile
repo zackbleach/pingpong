@@ -16,6 +16,10 @@ EXPOSE  8000
 ADD app/ app/
 ADD config.py config.py
 ADD run.py run.py
+
+RUN python run.py db init
+RUN python run.py db migrate
+
 ADD app.db app.db
 
 # Run
